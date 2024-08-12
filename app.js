@@ -18,27 +18,27 @@ app.get('/', (req, res) => {
 });
 
 // 라우팅 설정
-app.get('/', (req, res) => {
-  res.render('Map'), {title: 'Main page'};  // index.ejs 파일을 렌더링
+app.get('/Map', (req, res) => {
+  res.render('Map'), {title: 'Map page'};  // index.ejs 파일을 렌더링
 });
 
 // 라우팅 설정
-app.get('/', (req, res) => {
+app.get('/Login', (req, res) => {
   res.render('Login'), {title: 'Login page'};  // index.ejs 파일을 렌더링
 });
 
 // 라우팅 설정
-app.get('/', (req, res) => {
-  res.render('Thema'), {title: 'Thema page'};  // index.ejs 파일을 렌더링
+app.get('/Thema1', (req, res) => {
+  res.render('pages/Thema/Thema1'), {title: 'Thema page'};  // index.ejs 파일을 렌더링
 });
 
 // 라우팅 설정
-app.get('/', (req, res) => {
+app.get('/Thema2', (req, res) => {
   res.render('Thema2'), {title: 'Thema2 page'};  // index.ejs 파일을 렌더링
 });
 
 // 라우팅 설정
-app.get('/', (req, res) => {
+app.get('/Mypage', (req, res) => {
   res.render('Mypage'), {title: 'Mypage'};  // index.ejs 파일을 렌더링
 });
 
