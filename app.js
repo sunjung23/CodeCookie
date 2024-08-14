@@ -152,5 +152,17 @@ app.get('/Mypage', async(req, res) => {
   }  
 });
 
+// 유저목록 페이지
+app.get('/user',async(req,res)=>{
+  let result = await db.collection('user').find().toArray()
+  let user = req.user
+  res.render('pages/user',{result : result, user:user})
+})
 
+// 검색기능
+app.get('/usersearch', async(req,res)=>{
+  let result = await db.collection('user').find({username : {$regex : req.query.search} }).toArray()
+  let user = req.user
+  res.render('pages/usersearch.ejs',{result : result, user : user})
+})
 

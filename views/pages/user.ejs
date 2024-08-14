@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input class="search">
+    <button class="search-send">검색</button>
+    <% if (user) { %>
+
+        <% for(let i=0; i<result.length; i++) {%>
+            <h1> <%= result[i].username %> </h1>
+            <button>친구 추가</button>
+        <% } %>
+
+    <% } else { %>
+        <% for(let i=0; i<result.length; i++) {%>
+            <h1> <%= result[i].username %> </h1>
+        <% } %>
+    <% } %>
+    
+    
+    <script>
+        document.querySelector('.search-send').addEventListener('click',()=>{
+            let input = document.querySelector('.search').value.trim()
+            if (input !== ''){
+                location.href = '/usersearch?search=' + input
+            }else {
+                alert('검색어를 입력해주세요')
+            }
+            
+        })
+        
+        document.querySelector('.search').addEventListener('keydown',(e)=>{
+            if (e.key === 'Enter') {
+                document.querySelector('.search-send').click()
+            }
+        })
+    </script>
+</body>
+</html>
