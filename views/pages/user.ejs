@@ -10,10 +10,11 @@
     <button class="search-send">검색</button>
     <% if (user) { %>
 
-        <% for(let i=0; i<result.length; i++) {%>
-            <h1> <%= result[i].username %> </h1>
-            <button>친구 추가</button>
-        <% } %>
+    <% for(let i=0; i<result.length; i++) {%>
+        <% if (result[i].username == user.username) continue %>
+        
+        <h1> <%= result[i].username %> </h1>
+    <% } %>
 
     <% } else { %>
         <% for(let i=0; i<result.length; i++) {%>

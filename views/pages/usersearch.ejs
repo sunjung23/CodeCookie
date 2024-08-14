@@ -6,11 +6,13 @@
     <title>유저 검색</title>
 </head>
 <body>
+
     <% if (user) {%>
 
         <% for (let i=0; i<result.length; i++) {%>
+            <% if (result[i].username == user.username) continue%>
             <h2><%= result[i].username %></h2>
-            <button>친구 추가</button>
+            <button type="submit" class="addfriend" data-id="<%= result[i].username %>">친구 추가</button>
         <% } %>
 
     <% } else{ %>
@@ -18,5 +20,15 @@
             <h2><%= result[i].username %></h2>
         <% } %>
     <% } %>
+
+
+    <script>
+        let button = document.querySelectorAll('.addfriend')
+        for (let i=0; i<button.length; i++) {
+            button[i].addEventListener('click',()=>{
+                location.href = 'addfriend?username=<%= user.username %>&friendname='+button[i].dataset.id
+            })
+        }
+    </script>
 </body>
 </html>

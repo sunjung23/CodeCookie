@@ -137,7 +137,8 @@ app.get('/register',(req,res)=>{
 app.post('/register',async(req,res)=>{
   await db.collection('user').insertOne({
     username : req.body.username,
-    password : req.body.password
+    password : req.body.password,
+    friend : []
   })
   res.redirect('/')
 })
@@ -159,10 +160,42 @@ app.get('/user',async(req,res)=>{
   res.render('pages/user',{result : result, user:user})
 })
 
-// 검색기능
+// 유저 검색기능
 app.get('/usersearch', async(req,res)=>{
   let result = await db.collection('user').find({username : {$regex : req.query.search} }).toArray()
   let user = req.user
   res.render('pages/usersearch.ejs',{result : result, user : user})
+})
+
+// 친구추가 기능
+app.get('/addfriend', async(req,res)=>{
+  let user = await db.collection('user').findOne({username : req.user.username})
+  let filter = user.friend
+
+  if (filter.indexOf(req.query.friendname) == -1) {
+    await db.collection('user').updateOne(
+      {username : req.query.username},
+      {$push : {friend : req.query.friendname} }
+    )
+    await db.collection('user').updateOne(
+      {username : req.query.friendname},
+      {$push : {friend : req.query.username}}
+    )
+    let friend = await db.collection('user').findOne({username : req.user.username})
+    res.render('pages/friendlist', {friend : friend.friend} )
+  } else {
+    res.send('이미 친구추가 되있음')
+  }
+  
+})
+
+// 친구목록 페이지
+app.get('/friendlist',async(req,res)=>{
+  if(req.user) {
+    let friend = await db.collection('user').findOne({username : req.user.username})
+    res.render('pages/friendlist', {friend : friend.friend} )
+  } else {
+    res.send('로그인 필요')
+  }  
 })
 
