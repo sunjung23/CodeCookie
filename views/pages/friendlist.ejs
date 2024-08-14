@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>친구 목록</title>
+</head>
+<body>
+    <h1>친구 목록</h1>
+    <% for (let i=0; i<friend.length; i++) { %>
+        <h2><%= friend[i] %></h2>
+        <button class="delete" data-id="<%= friend[i] %>">친구 삭제</button>
+    <% } %>
+
+    <script>
+        let button = document.querySelectorAll('.delete')
+
+        for(let i=0; i<button.length; i++){
+            button[i].addEventListener('click',(e)=>{
+                location.href='delete?username=<%= user.username %>&friendname='+button[i].dataset.id
+            })
+        }
+    </script>
+</body>
+</html>

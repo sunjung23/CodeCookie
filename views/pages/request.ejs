@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>친구 요청</title>
+</head>
+<body>
+    <% for(let i=0; i<result.request.length; i++) { %>
+        <h2><%= result.request[i] %></h2>
+        <button class="accept" data-id="<%= result.request[i] %>">수락</button>
+        <button class="decline" data-id="<%= result.request[i] %>">거절</button>
+    <% } %>
+
+    <script>
+        let accept = document.querySelectorAll('.accept')
+        let decline = document.querySelectorAll('.decline')
+        let button = document.querySelectorAll('.accept')
+
+        for(let i=0; i<accept.length; i++) {
+            accept[i].addEventListener('click',(e)=>{
+                location.href='addfriend?username=<%= user.username %>&friendname='+button[i].dataset.id
+            })
+        }
+
+        for(let i=0; i<decline.length; i++) {
+            decline[i].addEventListener('click',(e)=>{
+                location.href='decline?username=<%= user.username %>&friendname='+button[i].dataset.id
+            })
+        }
+    </script>
+</body>
+</html>

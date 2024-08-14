@@ -42,7 +42,7 @@ app.use(session({
   secret: 'password',
   resave : false,
   saveUninitialized : false,
-  cookie : {maxAge : 60 * 60 * 1000},
+  cookie : {maxAge : 24 * 60 * 60 * 1000},
   store : MongoStore.create({
     mongoUrl : 'mongodb+srv://user:1234@cluster0.b3bf6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
     dbName : 'CodeCookie'
@@ -71,7 +71,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (user, done) => {
   let result = await db.collection('user').findOne({_id :new ObjectId(user.id)})
-  delete result.password
+  if (result){delete result.password}
   process.nextTick(() => {
     return done(null, result)
   })
@@ -137,7 +137,9 @@ app.get('/register',(req,res)=>{
 app.post('/register',async(req,res)=>{
   await db.collection('user').insertOne({
     username : req.body.username,
-    password : req.body.password
+    password : req.body.password,
+    friend : [],
+    request : []
   })
   res.redirect('/')
 })
@@ -152,5 +154,89 @@ app.get('/Mypage', async(req, res) => {
   }  
 });
 
+// 유저목록 페이지
+app.get('/user',async(req,res)=>{
+  let result = await db.collection('user').find().toArray()
+  let user = req.user
+  res.render('pages/user',{result : result, user:user})
+})
 
+// 유저 검색기능
+app.get('/usersearch', async(req,res)=>{
+  let result = await db.collection('user').find({username : {$regex : req.query.search} }).toArray()
+  let user = req.user
+  res.render('pages/usersearch.ejs',{result : result, user : user})
+})
+
+// 친구추가 기능
+app.get('/addfriend', async(req,res)=>{ 
+
+  let user = await db.collection('user').findOne({username : req.user.username})
+  let filter = user.friend
+  
+  if (filter.indexOf(req.query.friendname) == -1) {
+    await db.collection('user').updateOne(
+      {username : req.query.username},
+      {$push : {friend : req.query.friendname} }
+    )
+    await db.collection('user').updateOne(
+      {username : req.query.friendname},
+      {$push : {friend : req.query.username}}
+    )
+    await db.collection('user').updateOne(
+      {username : req.query.username},
+      {$pull : {request : req.query.friendname}}
+    )
+    res.redirect('/friendlist')
+  } else {
+    res.redirect('back')
+  }  
+  
+})
+
+// 친구삭제
+app.get('/delete',async(req,res)=>{
+  await db.collection('user').updateOne(
+    {username : req.query.username},
+    {$pull : {friend : req.query.friendname}}
+  )
+  await db.collection('user').updateOne(
+    {username : req.query.friendname},
+    {$pull : {friend : req.query.username}}
+  )
+  res.redirect('/friendlist')
+})
+
+// 친구목록 페이지
+app.get('/friendlist',async(req,res)=>{
+  if(req.user) {
+    let friend = await db.collection('user').findOne({username : req.user.username})
+    let user = req.user
+    res.render('pages/friendlist', {friend : friend.friend, user : user} )
+  } else {
+    res.send('로그인 필요')
+  }  
+})
+
+// 친구 요청
+app.get('/friendrequest',async(req,res)=>{
+  await db.collection('user').updateOne({username : req.query.friendname},{$push : {request : req.query.username}})
+  res.redirect('back')
+})
+
+// 친구요청 거절
+app.get('/decline',async(req,res)=>{
+  await db.collection('user').updateOne(
+    {username : req.query.username},
+    {$pull : {request : req.query.friendname}}
+  )
+  res.redirect('/friendlist')
+})
+
+// 친구 요청 목록 페이지
+app.get('/request',async(req,res)=>{
+  let result = await db.collection('user').findOne({username : req.user.username})
+  let user = req.user
+  res.render('pages/request', {result : result, user : user})
+})
 
