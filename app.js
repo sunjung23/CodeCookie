@@ -7,7 +7,6 @@ const session = require('express-session')       // passport 라이브러리
 const passport = require('passport')             // passport 라이브러리
 const LocalStrategy = require('passport-local') // passport 라이브러리
 const MongoStore = require('connect-mongo')
-require('dotenv').config() 
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -23,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // DB 연결
 let db
-const url = process.env.DB_URL
+const url = 'mongodb+srv://user:1234@cluster0.b3bf6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 new MongoClient(url).connect().then((client)=>{
   console.log('DB연결성공')
   db = client.db('CodeCookie')
@@ -45,7 +44,7 @@ app.use(session({
   saveUninitialized : false,
   cookie : {maxAge : 24 * 60 * 60 * 1000},
   store : MongoStore.create({
-    mongoUrl : process.env.DB_URL,
+    mongoUrl : 'mongodb+srv://user:1234@cluster0.b3bf6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
     dbName : 'CodeCookie'
   })
 }))
