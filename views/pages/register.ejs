@@ -8,10 +8,72 @@
 <body>
     <form  action="/register" method="post">
         <h4>회원가입</h4>
-        <input name="username" placeholder="아이디"><br>
+        <input name="username" placeholder="아이디"><button type="button">중복 체크</button> <span id="check"></span> <br>
         <input name="password" type="password" placeholder="비밀번호"><br>
         <input name="password2" type="password" placeholder="비밀번호 한번 더 입력"><br>
-        <button type="submit">전송</button>
+        <button type="submit" id="button" >전송</button>
     </form>
+    
+    <script>
+        let id = document.querySelector('[name=username]')
+        let pw = document.querySelector('[name=password]')
+        let pw2 = document.querySelector('[name=password2]')
+        let button = document.querySelector('#button')
+        let idCheck = document.querySelector('[type=button]')
+        let data = '<%= username %>'
+        let username = data.split(',')
+        let span = document.querySelector('#check')
+        let count=0
+
+        if(pw.value == '') {
+            button.disabled=true
+        }
+        
+        pw.addEventListener('keyup',(e)=>{
+            if(pw.value == pw2.value) {
+                button.disabled=false
+            }
+        })
+        pw2.addEventListener('keyup',(e)=>{
+            if(pw.value == pw2.value) {
+                button.disabled=false
+            }
+        })
+
+        pw.addEventListener('keyup',(e)=>{
+            if(pw.value != pw2.value) {
+                button.disabled=true
+            }
+        })
+        pw2.addEventListener('keyup',(e)=>{
+            if(pw.value != pw2.value) {
+                button.disabled=true
+            }
+        })
+        
+        idCheck.addEventListener('click',(e)=>{
+            for (let i=0; i<username.length; i++) {
+                if(username[i] == id.value || id.value.trim()=='') {
+                    span.textContent=`사용할 수 없는 아이디 입니다`
+                    count=0
+                    break
+                } else {
+                    span.textContent=`사용 가능한 아이디입니다`
+                    count=1
+                    break
+                }
+            }  
+            
+        })
+        
+        button.addEventListener('click',(e)=>{
+            if( count ==0 ) {
+                e.preventDefault()
+                alert('아이디 중복체크 해주세요')
+            }
+        })
+
+
+    </script>
 </body>
 </html>

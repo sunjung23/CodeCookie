@@ -7,6 +7,7 @@ const session = require('express-session')       // passport 라이브러리
 const passport = require('passport')             // passport 라이브러리
 const LocalStrategy = require('passport-local') // passport 라이브러리
 const MongoStore = require('connect-mongo')
+require('dotenv').config() 
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -22,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // DB 연결
 let db
-const url = 'mongodb+srv://user:1234@cluster0.b3bf6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+const url = process.env.DB_URL
 new MongoClient(url).connect().then((client)=>{
   console.log('DB연결성공')
   db = client.db('CodeCookie')
@@ -44,7 +45,7 @@ app.use(session({
   saveUninitialized : false,
   cookie : {maxAge : 24 * 60 * 60 * 1000},
   store : MongoStore.create({
-    mongoUrl : 'mongodb+srv://user:1234@cluster0.b3bf6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+    mongoUrl : process.env.DB_URL,
     dbName : 'CodeCookie'
   })
 }))
@@ -130,18 +131,28 @@ app.get('/logout', (req, res, next)=> {
 });
 
 // 회원가입 페이지
-app.get('/register',(req,res)=>{
-  res.render('pages/register')
+app.get('/register',async(req,res)=>{
+  let user = await db.collection('user').find().toArray()
+  let username = []
+
+  for(let i=0; i<user.length; i++) {
+    username.push(user[i].username)
+  }
+  res.render('pages/register',{username: username})
 })
 
 app.post('/register',async(req,res)=>{
-  await db.collection('user').insertOne({
-    username : req.body.username,
-    password : req.body.password,
-    friend : [],
-    request : []
-  })
-  res.redirect('/')
+  if(req.body.password == req.body.password2) {
+    await db.collection('user').insertOne({
+      username : req.body.username,
+      password : req.body.password,
+      friend : [],
+      request : []
+    })
+    res.redirect('/')
+  } else {
+    
+  }  
 })
 
 // 마이페이지
@@ -220,8 +231,14 @@ app.get('/friendlist',async(req,res)=>{
 
 // 친구 요청
 app.get('/friendrequest',async(req,res)=>{
-  await db.collection('user').updateOne({username : req.query.friendname},{$push : {request : req.query.username}})
-  res.redirect('back')
+  let user = await db.collection('user').findOne({username : req.query.friendname})
+  let filter = user.request
+  if(filter.indexOf(req.query.username) == -1) {
+    await db.collection('user').updateOne({username : req.query.friendname},{$push : {request : req.query.username}})
+    res.redirect('back')
+  }else {
+    res.send('이미 친구요청 보냈음')
+  }  
 })
 
 // 친구요청 거절
