@@ -222,7 +222,18 @@ app.get('/friendlist',async(req,res)=>{
   if(req.user) {
     let friend = await db.collection('user').findOne({username : req.user.username})
     let user = req.user
-    res.render('pages/friendlist', {friend : friend.friend, user : user} )
+
+    let array = []
+    for(let i=0; i<req.user.friend.length; i++) {
+      array.push(await db.collection('user').find({username : req.user.friend[i]}).toArray())
+    }
+
+    let result =[]
+    for(let i=0; i<array.length; i++) {
+      result[i] = array[i][0]._id 
+    }
+        
+    res.render('pages/friendlist', {friend : friend.friend, user : user, result : result} )
   } else {
     res.send('로그인 필요')
   }  
@@ -256,3 +267,7 @@ app.get('/request',async(req,res)=>{
   res.render('pages/request', {result : result, user : user})
 })
 
+// 채팅
+app.get('/chat/:id',async(req,res)=>{
+  res.render('pages/chat',{id : req.params.id})
+})

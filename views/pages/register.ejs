@@ -53,14 +53,14 @@
         
         idCheck.addEventListener('click',(e)=>{
             for (let i=0; i<username.length; i++) {
-                if(username[i] == id.value || id.value.trim()=='') {
+                if(username[i] == id.value || id.value.trim() == '') {
                     span.textContent=`사용할 수 없는 아이디 입니다`
                     count=0
                     break
                 } else {
                     span.textContent=`사용 가능한 아이디입니다`
                     count=1
-                    break
+                    
                 }
             }  
             
