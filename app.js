@@ -7,6 +7,11 @@ const session = require('express-session')       // passport 라이브러리
 const passport = require('passport')             // passport 라이브러리
 const LocalStrategy = require('passport-local') // passport 라이브러리
 const MongoStore = require('connect-mongo')
+// socket.io
+const { createServer } = require('http')
+const { Server } = require('socket.io')
+const server = createServer(app)
+const io = new Server(server) 
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -29,7 +34,7 @@ new MongoClient(url).connect().then((client)=>{
 
     // 서버 시작
   const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
 }).catch((err)=>{
@@ -270,4 +275,13 @@ app.get('/request',async(req,res)=>{
 // 채팅
 app.get('/chat/:id',async(req,res)=>{
   res.render('pages/chat',{id : req.params.id})
+})
+
+io.on('connection', (socket)=>{
+  console.log('웹소켓 연결')
+
+  socket.on('msg',(data)=>{
+    console.log(data)
+    io.emit('name','aaa')
+  })
 })

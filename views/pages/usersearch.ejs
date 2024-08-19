@@ -6,6 +6,7 @@
     <title>유저 검색</title>
 </head>
 <body>
+    <%- include('../partials/header.ejs') %>
 
     <% if (user) {%>
 
@@ -20,6 +21,8 @@
             <h2><%= result[i].username %></h2>
         <% } %>
     <% } %>
+
+    <%- include('../partials/footer.ejs') %>
 
 
     <script>
