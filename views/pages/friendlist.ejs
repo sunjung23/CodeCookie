@@ -6,12 +6,16 @@
     <title>친구 목록</title>
 </head>
 <body>
+    <%- include('../partials/header.ejs') %>
+
     <h1>친구 목록</h1>
     <% for (let i=0; i<friend.length; i++) { %>
         <h2><%= friend[i] %></h2>
         <button class="chat" >채팅 하기</button>
         <button class="delete" data-id="<%= friend[i] %>">친구 삭제</button>
     <% } %>
+
+    <%- include('../partials/footer.ejs') %>
 
     <script> // 친구삭제 버튼
         let button = document.querySelectorAll('.delete')

@@ -6,6 +6,8 @@
     <title>회원가입</title>
 </head>
 <body>
+    <%- include('../partials/header.ejs') %>
+
     <form  action="/register" method="post">
         <h4>회원가입</h4>
         <input name="username" placeholder="아이디"><button type="button">중복 체크</button> <span id="check"></span> <br>
@@ -13,6 +15,8 @@
         <input name="password2" type="password" placeholder="비밀번호 한번 더 입력"><br>
         <button type="submit" id="button" >전송</button>
     </form>
+
+    <%- include('../partials/footer.ejs') %>
     
     <script>
         let id = document.querySelector('[name=username]')

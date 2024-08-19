@@ -6,6 +6,8 @@
     <title>Document</title>
 </head>
 <body>
+    <%- include('../partials/header.ejs') %>
+
     <input class="search">
     <button class="search-send">검색</button>
     <% if (user) { %>
@@ -21,6 +23,8 @@
             <h1> <%= result[i].username %> </h1>
         <% } %>
     <% } %>
+
+    <%- include('../partials/footer.ejs') %>
     
     
     <script>
