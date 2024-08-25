@@ -7,6 +7,11 @@ const session = require('express-session')       // passport 라이브러리
 const passport = require('passport')             // passport 라이브러리
 const LocalStrategy = require('passport-local') // passport 라이브러리
 const MongoStore = require('connect-mongo')
+// socket.io
+const { createServer } = require('http')
+const { Server } = require('socket.io')
+const server = createServer(app)
+const io = new Server(server) 
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -29,7 +34,7 @@ new MongoClient(url).connect().then((client)=>{
 
     // 서버 시작
   const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
 }).catch((err)=>{
@@ -130,18 +135,28 @@ app.get('/logout', (req, res, next)=> {
 });
 
 // 회원가입 페이지
-app.get('/register',(req,res)=>{
-  res.render('pages/register')
+app.get('/register',async(req,res)=>{
+  let user = await db.collection('user').find().toArray()
+  let username = []
+
+  for(let i=0; i<user.length; i++) {
+    username.push(user[i].username)
+  }
+  res.render('pages/register',{username: username})
 })
 
 app.post('/register',async(req,res)=>{
-  await db.collection('user').insertOne({
-    username : req.body.username,
-    password : req.body.password,
-    friend : [],
-    request : []
-  })
-  res.redirect('/')
+  if(req.body.password == req.body.password2) {
+    await db.collection('user').insertOne({
+      username : req.body.username,
+      password : req.body.password,
+      friend : [],
+      request : []
+    })
+    res.redirect('/')
+  } else {
+    
+  }  
 })
 
 // 마이페이지
@@ -212,7 +227,18 @@ app.get('/friendlist',async(req,res)=>{
   if(req.user) {
     let friend = await db.collection('user').findOne({username : req.user.username})
     let user = req.user
-    res.render('pages/friendlist', {friend : friend.friend, user : user} )
+
+    let array = []
+    for(let i=0; i<req.user.friend.length; i++) {
+      array.push(await db.collection('user').find({username : req.user.friend[i]}).toArray())
+    }
+
+    let result =[]
+    for(let i=0; i<array.length; i++) {
+      result[i] = array[i][0]._id 
+    }
+        
+    res.render('pages/friendlist', {friend : friend.friend, user : user, result : result} )
   } else {
     res.send('로그인 필요')
   }  
@@ -220,8 +246,14 @@ app.get('/friendlist',async(req,res)=>{
 
 // 친구 요청
 app.get('/friendrequest',async(req,res)=>{
-  await db.collection('user').updateOne({username : req.query.friendname},{$push : {request : req.query.username}})
-  res.redirect('back')
+  let user = await db.collection('user').findOne({username : req.query.friendname})
+  let filter = user.request
+  if(filter.indexOf(req.query.username) == -1) {
+    await db.collection('user').updateOne({username : req.query.friendname},{$push : {request : req.query.username}})
+    res.redirect('back')
+  }else {
+    res.send('이미 친구요청 보냈음')
+  }  
 })
 
 // 친구요청 거절
@@ -240,3 +272,16 @@ app.get('/request',async(req,res)=>{
   res.render('pages/request', {result : result, user : user})
 })
 
+// 채팅
+app.get('/chat/:id',async(req,res)=>{
+  res.render('pages/chat',{id : req.params.id})
+})
+
+io.on('connection', (socket)=>{
+  console.log('웹소켓 연결')
+
+  socket.on('msg',(data)=>{
+    console.log(data)
+    io.emit('name','aaa')
+  })
+})

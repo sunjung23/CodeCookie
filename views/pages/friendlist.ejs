@@ -6,13 +6,18 @@
     <title>친구 목록</title>
 </head>
 <body>
+    <%- include('../partials/header.ejs') %>
+
     <h1>친구 목록</h1>
     <% for (let i=0; i<friend.length; i++) { %>
         <h2><%= friend[i] %></h2>
+        <button class="chat" >채팅 하기</button>
         <button class="delete" data-id="<%= friend[i] %>">친구 삭제</button>
     <% } %>
 
-    <script>
+    <%- include('../partials/footer.ejs') %>
+
+    <script> // 친구삭제 버튼
         let button = document.querySelectorAll('.delete')
 
         for(let i=0; i<button.length; i++){
@@ -20,6 +25,20 @@
                 location.href='delete?username=<%= user.username %>&friendname='+button[i].dataset.id
             })
         }
+    </script>
+
+    <script> // 채팅 버튼
+        let chat = document.querySelectorAll('.chat')
+        let result = '<%= result %>'
+        let id = result.split(',')
+
+        for(let i=0; i<'<%=  friend.length %>'; i++) {
+            chat[i].addEventListener('click',(e)=>{
+                location.href=`chat/${id[i]}`
+            })
+        }
+
+        
     </script>
 </body>
 </html>

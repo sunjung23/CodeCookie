@@ -6,11 +6,15 @@
     <title>친구 요청</title>
 </head>
 <body>
+    <%- include('../partials/header.ejs') %>
+
     <% for(let i=0; i<result.request.length; i++) { %>
         <h2><%= result.request[i] %></h2>
         <button class="accept" data-id="<%= result.request[i] %>">수락</button>
         <button class="decline" data-id="<%= result.request[i] %>">거절</button>
     <% } %>
+
+    <%- include('../partials/footer.ejs') %>
 
     <script>
         let accept = document.querySelectorAll('.accept')
