@@ -88,18 +88,18 @@ app.get('/', (req, res) => {
   res.render('pages/Main/index'), {title: 'Main page'};  // index.ejs 파일을 렌더링
 });
 
-// 라우팅 설정
+// 지도페이지
 app.get('/Map', (req, res) => {
   res.render('pages/Map', {title: 'Map page'});  // index.ejs 파일을 렌더링
 });
 
 
-// 라우팅 설정
+// 테마1 드라마페이지
 app.get('/Thema1', (req, res) => {
   res.render('pages/Thema/Thema1', {title: 'Thema page'});  // index.ejs 파일을 렌더링
 });
 
-// 라우팅 설정
+// 테마2 계절페이지
 app.get('/Thema2', (req, res) => {
   res.render('pages/Thema/Thema2', {title: 'Thema2 page'});  // index.ejs 파일을 렌더링
 });
