@@ -7,13 +7,21 @@
     align-items: center;
 }
 
-.menu {
+.menu{
     list-style: none;
     margin: 0;
     display: flex;
 }
 
-.menu li {
+.mypagelogo{
+    list-style: none;
+    margin: 0;
+    display: flex;
+    float: right;
+}
+
+li {
+    display: inline;
     margin: 0 30px;
     color: white;
     cursor: pointer;
@@ -22,7 +30,7 @@
     font-size: 20px;
 }
 
-.menu a {
+a {
     text-decoration: none;
     color: white;
 }
