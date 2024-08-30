@@ -6,22 +6,25 @@
     <link rel="stylesheet" href="/styles/header.css">
 </head>
 <body>
-    <div class="header">
+    <header className="header">
 
-        <div class="logo">
-            <a href="/">
-            <!-- <img src=""> -->
-            </a>
-        </div>
-
-            <ul class="menu">
-                <li><a href="/">Home</a></li>
-                <li><a href="/Tnema1">Thema</a></li>
-                <li><a href="/Map">Map</a></li>
+        <nav className="h_container">
+    
+          <div className='logo'>
+            <a href='/'>
+            <img src="/images/logo.png"> </a>
+          </div>
+    
+            <ul className='menu'>
+              <li><a href="/Thema1">Thema</a> </li>
+              <li><a href="/map">Map</a> </li>
             </ul>
-            <ul class="mypagelogo">
-                <li><a href="/login">login</a></li>
-                <li><a href="/Mypage">My</a></li>
+    
+            <ul className='icon'>
+              <li><a href='/Login'>Login</a></li>
+              <li><a href='/Mypage'>My</a></li>
             </ul>
-    </header>
+    
+        </nav>
+      </header>
 </body>
