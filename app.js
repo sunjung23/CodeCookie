@@ -85,29 +85,29 @@ passport.deserializeUser(async (user, done) => {
 
 // 라우팅 설정
 app.get('/', (req, res) => {
-  res.render('pages/Main/index'), {title: 'Main page'};  // index.ejs 파일을 렌더링
+  res.render('pages/Main/index'), {title: 'Main page'};  
 });
 
 // 지도페이지
 app.get('/Map', (req, res) => {
-  res.render('pages/Map', {title: 'Map page'});  // index.ejs 파일을 렌더링
+  res.render('pages/Map', {title: 'Map page'});  
 });
 
 
 // 테마1 드라마페이지
 app.get('/Thema1', (req, res) => {
-  res.render('pages/Thema/Thema1', {title: 'Thema page'});  // index.ejs 파일을 렌더링
+  res.render('pages/Thema/Thema1', {title: 'Thema page'});  
 });
 
 // 테마2 계절페이지
 app.get('/Thema2', (req, res) => {
-  res.render('pages/Thema/Thema2', {title: 'Thema2 page'});  // index.ejs 파일을 렌더링
+  res.render('pages/Thema/Thema2', {title: 'Thema2 page'});  
 });
 
 // 로그인페이지
 app.get('/Login', (req, res) => {
   console.log(req.user)
-  res.render('pages/Login', {title: 'Login page'});  // index.ejs 파일을 렌더링
+  res.render('pages/Login', {title: 'Login page'});  
 });
 
 app.post('/login', async (req, res, next) => {
@@ -150,6 +150,7 @@ app.post('/register',async(req,res)=>{
     await db.collection('user').insertOne({
       username : req.body.username,
       password : req.body.password,
+      name : req.body.name,
       friend : [],
       request : []
     })
@@ -162,8 +163,9 @@ app.post('/register',async(req,res)=>{
 // 마이페이지
 app.get('/Mypage', async(req, res) => {
   let result = req.user
+  let place = await db.collection('place').find().toArray()
   if (req.user){
-    res.render('pages/Mypage', {result : result }) 
+    res.render('pages/Mypage', {result : result, place:place }) 
   }else {
     res.send('로그인 필요')
   }  
@@ -202,7 +204,7 @@ app.get('/addfriend', async(req,res)=>{
       {username : req.query.username},
       {$pull : {request : req.query.friendname}}
     )
-    res.redirect('/friendlist')
+    res.redirect('back')
   } else {
     res.redirect('back')
   }  
@@ -274,14 +276,21 @@ app.get('/request',async(req,res)=>{
 
 // 채팅
 app.get('/chat/:id',async(req,res)=>{
+  console.log(req.session.passport.user)
   res.render('pages/chat',{id : req.params.id})
 })
 
-io.on('connection', (socket)=>{
-  console.log('웹소켓 연결')
 
+
+io.on('connection', (socket)=>{
+  // const sessionId = socket.request.session.id
+  // console.log(sessionId)
+
+  
   socket.on('msg',(data)=>{
     console.log(data)
-    io.emit('name','aaa')
+    socket.join(data.room)
+    io.to(data.room).emit('broadcast',data.msg)
+    
   })
 })

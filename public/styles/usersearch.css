@@ -1,0 +1,24 @@
+.addfriend {
+    background-color: #eee;
+    border: none;
+    padding: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    width: 8em;
+    border-radius: 1rem;
+    color: rgb(30, 216, 76);
+    box-shadow: 0 0.2rem #dfd9d9;
+    cursor: pointer;
+    float:right;
+}
+.addfriend:active {
+    color: white;
+    box-shadow: 0 0.2rem #dfd9d9;
+    transform: translateY(0.2rem);
+}
+.addfriend:hover {
+    background: rgb(47, 226, 107);
+    color: white;
+    text-shadow: 0 0.1rem #bcb4b4;
+}
+  

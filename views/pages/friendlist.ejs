@@ -4,25 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>친구 목록</title>
+    <link rel="stylesheet" href="styles/friendlist.css">
 </head>
 <body>
-    <%- include('../partials/header.ejs') %>
 
-    <h1>친구 목록</h1>
     <% for (let i=0; i<friend.length; i++) { %>
-        <h2><%= friend[i] %></h2>
-        <button class="chat" >채팅 하기</button>
-        <button class="delete" data-id="<%= friend[i] %>">친구 삭제</button>
+        <div style="margin-bottom:10px;">
+
+            <h2 style="display:inline; position:relative; left:20px;" ><%= friend[i] %></h2>
+            <button class="chat" style="float:right; margin-left:10px; margin-right:5px;">💬 채팅 하기</button>
+            <button class="delete" data-id="<%= friend[i] %>" style="float:right; margin-right:10px;">친구 삭제</button><br>
+            
+        </div>
     <% } %>
 
-    <%- include('../partials/footer.ejs') %>
 
     <script> // 친구삭제 버튼
         let button = document.querySelectorAll('.delete')
 
         for(let i=0; i<button.length; i++){
             button[i].addEventListener('click',(e)=>{
-                location.href='delete?username=<%= user.username %>&friendname='+button[i].dataset.id
+            let check = confirm('친구를 삭제하실건가요?')
+                
+                if(check) {
+                    location.href='delete?username=<%= user.username %>&friendname='+button[i].dataset.id
+                }
             })
         }
     </script>
@@ -34,7 +40,7 @@
 
         for(let i=0; i<'<%=  friend.length %>'; i++) {
             chat[i].addEventListener('click',(e)=>{
-                location.href=`chat/${id[i]}`
+                parent.location.href=`chat/${id[i]}`
             })
         }
 
