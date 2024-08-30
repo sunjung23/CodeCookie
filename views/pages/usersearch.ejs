@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>유저 검색</title>
+    <link rel="stylesheet" href="styles/usersearch.css">
 </head>
 <body>
-    <%- include('../partials/header.ejs') %>
+    <img src="images/leftarrow.png" width="35px" height="35px" class="back" style="cursor:pointer"><br>
+
 
     <% if (user) {%>
 
         <% for (let i=0; i<result.length; i++) {%>
             <% if (result[i].username == user.username) continue%>
-            <h2><%= result[i].username %></h2>
-            <button type="submit" class="addfriend" data-id="<%= result[i].username %>">친구 추가</button>
+            <div style="margin-bottom:14px;">
+                <h2 style="display:inline"><%= result[i].username %></h2>
+                <button type="submit" class="addfriend" data-id="<%= result[i].username %>" style="margin-left:10px;"><span>친구 추가</span></button><br>
+            </div>
         <% } %>
 
     <% } else{ %>
@@ -22,7 +26,6 @@
         <% } %>
     <% } %>
 
-    <%- include('../partials/footer.ejs') %>
 
 
     <script>
@@ -32,6 +35,10 @@
                 location.href = 'friendrequest?username=<%= user.username %>&friendname='+button[i].dataset.id
             })
         }
+        let back = document.querySelector('.back')
+        back.addEventListener('click',(e)=>{
+            location.href='/user'
+        })
     </script>
 </body>
 </html>

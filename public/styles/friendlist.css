@@ -1,0 +1,47 @@
+.chat {
+    background-color: #eee;
+    border: none;
+    padding: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    width: 8em;
+    border-radius: 1rem;
+    color: rgb(96, 134, 240);
+    box-shadow: 0 0.2rem #dfd9d9;
+    cursor: pointer;
+}
+.chat:active {
+    color: white;
+    box-shadow: 0 0.2rem #dfd9d9;
+    transform: translateY(0.2rem);
+}
+.chat:hover {
+    background: rgb(47, 89, 226);
+    color: white;
+    text-shadow: 0 0.1rem #bcb4b4;
+}
+  
+
+.delete {
+    background-color: #eee;
+    border: none;
+    padding: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    width: 7em;
+    border-radius: 1rem;
+    color: rgb(240, 96, 96);
+    box-shadow: 0 0.2rem #dfd9d9;
+    cursor: pointer;
+}
+.delete:active {
+    color: white;
+    box-shadow: 0 0.2rem #dfd9d9;
+    transform: translateY(0.2rem);
+}
+.delete:hover {
+    background: lightcoral;
+    color: white;
+    text-shadow: 0 0.1rem #bcb4b4;
+}
+

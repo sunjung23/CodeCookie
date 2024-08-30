@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>친구 요청</title>
+    <link rel="stylesheet" href="styles/request.css">
 </head>
 <body>
-    <%- include('../partials/header.ejs') %>
+    
 
     <% for(let i=0; i<result.request.length; i++) { %>
-        <h2><%= result.request[i] %></h2>
-        <button class="accept" data-id="<%= result.request[i] %>">수락</button>
-        <button class="decline" data-id="<%= result.request[i] %>">거절</button>
+        <div style="margin-bottom:10px;">
+            <h2 style="display:inline; position:relative; left:20px;"><%= result.request[i] %></h2>
+            <button class="accept" data-id="<%= result.request[i] %>" style="margin-left:10px; margin-right:5px;">수락</button>
+            <button class="decline" data-id="<%= result.request[i] %>" style="margin-right:10px;">거절</button><br>
+        </div>
     <% } %>
 
-    <%- include('../partials/footer.ejs') %>
+
 
     <script>
         let accept = document.querySelectorAll('.accept')
@@ -32,6 +35,8 @@
                 location.href='decline?username=<%= user.username %>&friendname='+button[i].dataset.id
             })
         }
+        
+        
     </script>
 </body>
 </html>

@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="styles/user.css">
 </head>
 <body>
-    <%- include('../partials/header.ejs') %>
 
-    <input class="search">
-    <button class="search-send">검색</button>
+    <input class="search" placeholder="유저 검색">
+    <button class="search-send"><img src="images/search.png" width="20px" height="20px"> </button>
     <% if (user) { %>
 
     <% for(let i=0; i<result.length; i++) {%>
         <% if (result[i].username == user.username) continue %>
         
-        <h1> <%= result[i].username %> </h1>
+        <h2> <%= result[i].username %> </h2>
     <% } %>
 
     <% } else { %>
@@ -24,7 +24,6 @@
         <% } %>
     <% } %>
 
-    <%- include('../partials/footer.ejs') %>
     
     
     <script>
