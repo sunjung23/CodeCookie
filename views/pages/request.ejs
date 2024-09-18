@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>친구 요청</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <link rel="stylesheet" href="styles/font.css">
+    <link rel="stylesheet" href="styles/request.css">
+</head>
+<body>
+    
+
+    <% for(let i=0; i<result.request.length; i++) { %>
+        <div style="margin-bottom:10px;">
+            <h2 style="display:inline; position:relative; left:20px;"><%= result.request[i] %></h2>
+            <button class="accept" data-id="<%= result.request[i] %>" style="margin-left:10px; margin-right:5px;">수락</button>
+            <button class="decline" data-id="<%= result.request[i] %>" style="margin-right:10px;">거절</button><br>
+        </div>
+    <% } %>
+
+
+
+    <script>
+        let accept = document.querySelectorAll('.accept')
+        let decline = document.querySelectorAll('.decline')
+        let button = document.querySelectorAll('.accept')
+
+        for(let i=0; i<accept.length; i++) {
+            accept[i].addEventListener('click',(e)=>{
+                location.href='addfriend?username=<%= user.username %>&friendname='+button[i].dataset.id
+            })
+        }
+
+        for(let i=0; i<decline.length; i++) {
+            decline[i].addEventListener('click',(e)=>{
+                location.href='decline?username=<%= user.username %>&friendname='+button[i].dataset.id
+            })
+        }
+        
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <link rel="stylesheet" href="styles/font.css">
+    <link rel="stylesheet" href="styles/chat.css">
+</head>
+<body>
+    <%- include('../partials/header.ejs') %>
+
+    <h1><%= id %></h1>
+
+    <%- include('../partials/footer.ejs') %>
+
+    <script src="https://cdn.jsdelivr.net/npm/socket.io@4.7.2/client-dist/socket.io.min.js"></script>
+    <script>
+        const socket = io() 
+        socket.emit('msg',{ msg : '안녕', room : '1'})
+        
+        socket.on('broadcast', (data)=>{
+            console.log(data)
+        })
+    </script>
+</body>
+</html>

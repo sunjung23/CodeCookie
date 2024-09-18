@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <link rel="stylesheet" href="styles/font.css">
+    <link rel="stylesheet" href="styles/user.css">
+</head>
+<body>
+
+    <input class="search" placeholder="유저 검색">
+    <button class="search-send"><img src="images/search.png" width="20px" height="20px"> </button>
+    <% if (user) { %>
+
+    <% for(let i=0; i<result.length; i++) {%>
+        <% if (result[i].username == user.username) continue %>
+        
+        <h2> <%= result[i].username %> </h2>
+    <% } %>
+
+    <% } else { %>
+        <% for(let i=0; i<result.length; i++) {%>
+            <h1> <%= result[i].username %> </h1>
+        <% } %>
+    <% } %>
+
+    
+    
+    <script>
+        document.querySelector('.search-send').addEventListener('click',()=>{
+            let input = document.querySelector('.search').value.trim()
+            if (input !== ''){
+                location.href = '/usersearch?search=' + input
+            }else {
+                alert('검색어를 입력해주세요')
+            }
+            
+        })
+        
+        document.querySelector('.search').addEventListener('keydown',(e)=>{
+            if (e.key === 'Enter') {
+                document.querySelector('.search-send').click()
+            }
+        })
+    </script>
+</body>
+</html>

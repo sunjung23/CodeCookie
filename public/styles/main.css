@@ -1,79 +1,124 @@
-*{
-    list-style: none;
-    text-decoration: none;
+* {
+  margin:0; 
+  padding:0;
+  box-sizing: border-box;
 }
 
-.mainbg {
-    background-color: rgb(0, 15, 92);
-    width: 100%;
-    height: 400px;
+body {
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center;     /* 수직 중앙 정렬 */
+  height: 100vh; 
 }
 
-.mainbg h1 { 
-    padding: 200px;
-    text-align: center;
-    color: white;
+/* 슬라이드 css  */
+
+li {
+  list-style: none;
 }
 
-.icons {
-    display: flex;
-    cursor: pointer;
-    justify-content: center;
+.kind_wrap {
+  /* border:2px solid grey; */
+  border-radius: 20px;
+  width:100%; 
+  max-width:600px; 
+  margin:0 auto; 
+  position: relative;
+}
+.kind_wrap > .kind_slider {
+  overflow: hidden;
+}
+.kind_wrap > .kind_slider .slider { 
+  position: relative; 
+  transition: 0.5s;
+}
+.kind_wrap > .kind_slider .slider li {
+  float:left;
+}
+.kind_wrap > .kind_slider img {
+  opacity: 0.9;
+  vertical-align: top;
+  border-radius: 18px;
+}
+.kind_wrap .arrow > a.prev {
+  position: absolute; 
+  left:-50px; 
+  top:100px;
+}
+.kind_wrap .arrow > a.next {
+  position: absolute; 
+  right:-50px; 
+  top:100px;
 }
 
-.icons ul {
-    list-style: none;
-}
-
-.icons li {
-    text-align: center;
-    width: 90px;
-    height: 125px;
-    padding: 40px;
-}
-
-.reclayout {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 40px;
-    margin-left: 150px;
-    margin-right: 150px;
-    font-weight: bold;
-    font-size: 20px;
-}
+/* 추천 css */
 
 .recspot {
-    display: flex;
-    cursor: pointer;
-    justify-content: center;
-    padding: 0;
-    margin: 0; 
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.recspot li {
-    text-align: center;
-    height: 211px;
-    width: 211px;
-    border: 2px solid black;
-    margin: 30px;
-    border-radius: 5px;
+.rec h3 {
+  text-align: center;
+  font-size: 30px bold;
+  margin: 30px;
+  margin-top: 200px;
 }
 
-.recfood {
-    display: flex;
-    cursor: pointer;
-    justify-content: center;
-    padding: 0;
-    margin: 0; 
-
+.recspot .rec {
+  margin-left: 20px;
+  background-color: rgb(234, 234, 234);
+  border-radius: 20%;
+  height: 300px;
+  width: 300px;
 }
 
-.recfood li {
-    text-align: center;
-    height: 211px;
-    width: 211px;
-    border: 2px solid black;
-    margin: 30px;
-    border-radius: 5px;
+/*박스 css*/
+
+.boxcontainer {
+  margin-top: 200px;
+  position: relative;
+  gap: 20px;
+}
+
+.box {
+  width: 500px;
+  height: 500px;
+  border-radius: 20px;
+  position: absolute;
+}
+
+.grey-box {
+  background-color: #f0f0f0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  top: 30px;
+  left: 300px;
+  z-index: 2;
+}
+
+.boxcontainer h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+  line-height: 1.5;
+}
+
+.link {
+  text-decoration: none;
+  font-size: 14px;
+  color: #000;
+}
+
+.blue-box {
+  background-color: #5594FF;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  top: 150px;
+  left: 750px;
+  z-index: 1;
 }

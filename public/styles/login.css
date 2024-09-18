@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 전체 화면 높이 */
+    background-color: #f0f4f8;
+    margin: 0; /* body 기본 margin 제거 */
+}
+
+.container {
+    margin: auto;
+    margin-top: 100px;
+    display: flex;
+    width: 900px;
+    height: 500px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white; /* 컨테이너 배경 색상 추가 */
+}
+
+.left-panel {
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    color: white;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-panel .content {
+    text-align: center;
+    padding: 20px;
+}
+
+.left-panel h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.left-panel p {
+    margin: 10px 0;
+}
+
+.right-panel {
+    width: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    width: 80%;
+    max-width: 350px;
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 30px;
+    color: #007bff;
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-box form a {
+    text-decoration: none;
+    color: white;
+}
+
+.login-box form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-box form label {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.login-box form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-box form button:hover {
+    background-color: #0056b3;
+}
+
+.login-box form p {
+    margin-top: 20px;
+}
+
+.login-box form p a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-box form p a:hover {
+    text-decoration: underline;
+}

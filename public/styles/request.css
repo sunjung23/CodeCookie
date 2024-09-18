@@ -1,0 +1,48 @@
+.accept {
+    background-color: #eee;
+    border: none;
+    padding: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    width: 8em;
+    border-radius: 1rem;
+    color: rgb(96, 134, 240);
+    box-shadow: 0 0.2rem #dfd9d9;
+    cursor: pointer;
+    float:right;
+}
+.accept:active {
+    color: white;
+    box-shadow: 0 0.2rem #dfd9d9;
+    transform: translateY(0.2rem);
+}
+.accept:hover {
+    background: rgb(47, 89, 226);
+    color: white;
+    text-shadow: 0 0.1rem #bcb4b4;
+}
+  
+
+.decline {
+    background-color: #eee;
+    border: none;
+    padding: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    width: 8em;
+    border-radius: 1rem;
+    color: rgb(240, 96, 96);
+    box-shadow: 0 0.2rem #dfd9d9;
+    cursor: pointer;
+    float:right;
+}
+.decline:active {
+    color: white;
+    box-shadow: 0 0.2rem #dfd9d9;
+    transform: translateY(0.2rem);
+}
+.decline:hover {
+    background: lightcoral;
+    color: white;
+    text-shadow: 0 0.1rem #bcb4b4;
+}
